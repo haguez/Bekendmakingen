@@ -33,7 +33,7 @@ from shapely.ops import transform as shp_transform
 SRU_URL = "https://repository.overheid.nl/sru"
 # Mogelijke schrijfwijzen van de organisatienaam in de API; de eerste met resultaten wint
 CREATORS = ["'s-Gravenhage", "Den Haag", "Gemeente Den Haag", "Gemeente 's-Gravenhage"]
-DAYS_BACK = 3                 # kijk een paar dagen terug; dubbelen worden gefilterd
+DAYS_BACK = 30                 # kijk een paar dagen terug; dubbelen worden gefilterd
 MAP_FILTER = "vergunning"     # alleen deze typen op de kaart (deel van het type); "" = alles
 OUTPUT = Path(__file__).with_name("bekendmakingen_den_haag.xlsx")
 PAGE_SIZE = 500
