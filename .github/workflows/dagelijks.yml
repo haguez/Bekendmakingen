@@ -44,14 +44,16 @@ jobs:
         if: steps.tijd.outputs.draai == 'ja'
         run: python bekendmakingen_den_haag.py
 
-      - name: Excel terugzetten in de repository
+      - name: Bestanden terugzetten in de repository
         if: steps.tijd.outputs.draai == 'ja'
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add bekendmakingen_den_haag.xlsx
+          git add bekendmakingen_den_haag.xlsx bekendmakingen_den_haag.csv bekendmakingen_den_haag.geojson
           if ! git diff --staged --quiet; then
             git commit -m "Nieuwe bekendmakingen"
-            git pull --rebase -X theirs
-            git push
+            for i in 1 2 3; do
+              git pull --rebase -X theirs && git push && break
+              sleep 5
+            done
           fi
