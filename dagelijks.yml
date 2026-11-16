@@ -1,0 +1,59 @@
+name: Bekendmakingen Den Haag
+
+on:
+  schedule:
+    # 07-11 UTC dekt 09-12 uur Nederlandse tijd in zowel zomer- als wintertijd
+    - cron: "0 7,8,9,10,11 * * *"
+  workflow_dispatch:       # handmatig starten blijft mogelijk
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bekendmakingen
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Controleer Nederlandse tijd
+        id: tijd
+        run: |
+          uur=$(TZ=Europe/Amsterdam date +%H)
+          echo "Nederlandse tijd: $uur uur"
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]] || [[ "$uur" =~ ^(09|10|11|12)$ ]]; then
+            echo "draai=ja" >> "$GITHUB_OUTPUT"
+          else
+            echo "draai=nee" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v5
+        if: steps.tijd.outputs.draai == 'ja'
+
+      - uses: actions/setup-python@v6
+        if: steps.tijd.outputs.draai == 'ja'
+        with:
+          python-version: "3.12"
+
+      - name: Dependencies installeren
+        if: steps.tijd.outputs.draai == 'ja'
+        run: pip install -r requirements.txt
+
+      - name: Script draaien
+        if: steps.tijd.outputs.draai == 'ja'
+        run: python bekendmakingen_den_haag.py
+
+      - name: Bestanden terugzetten in de repository
+        if: steps.tijd.outputs.draai == 'ja'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add bekendmakingen_den_haag.xlsx bekendmakingen_den_haag.csv bekendmakingen_den_haag.geojson
+          if ! git diff --staged --quiet; then
+            git commit -m "Nieuwe bekendmakingen"
+            for i in 1 2 3; do
+              git pull --rebase -X theirs && git push && break
+              sleep 5
+            done
+          fi

@@ -5,10 +5,16 @@ KOOP (dezelfde data als zoek.officielebekendmakingen.nl) en voegt nieuwe
 bekendmakingen toe aan een Excel-bestand. Reeds aanwezige bekendmakingen
 (op basis van het identifier-nummer, bv. gmb-2026-123456) worden overgeslagen.
 
-Gebruik:   python bekendmakingen_den_haag.py
-Vereist:   pip install requests openpyxl
+Uitvoer:
+  bekendmakingen_den_haag.xlsx     alle gegevens
+  bekendmakingen_den_haag.csv      zelfde, als tabel te bekijken op GitHub
+  bekendmakingen_den_haag.geojson  punten op een kaart (GitHub toont dit als kaart)
+
+Vereist:   pip install requests openpyxl shapely pyproj
 """
 import csv
+import json
+import re
 import sys
 import datetime as dt
 import xml.etree.ElementTree as ET
@@ -18,12 +24,17 @@ import requests
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 from openpyxl.utils import get_column_letter
+from pyproj import Transformer
+from shapely import wkt as swkt
+from shapely.geometry import GeometryCollection, mapping
+from shapely.ops import transform as shp_transform
 
 # ----------------------------------------------------------------- instellingen
 SRU_URL = "https://repository.overheid.nl/sru"
 # Mogelijke schrijfwijzen van de organisatienaam in de API; de eerste met resultaten wint
 CREATORS = ["'s-Gravenhage", "Den Haag", "Gemeente Den Haag", "Gemeente 's-Gravenhage"]
 DAYS_BACK = 3                 # kijk een paar dagen terug; dubbelen worden gefilterd
+MAP_FILTER = "vergunning"     # alleen deze typen op de kaart (deel van het type); "" = alles
 OUTPUT = Path(__file__).with_name("bekendmakingen_den_haag.xlsx")
 PAGE_SIZE = 500
 TIMEOUT = 60
@@ -43,8 +54,14 @@ COLUMNS = [
     ("Link", 50),
     ("Identifier", 22),
     ("Opgehaald op", 18),
+    ("Latitude", 12),
+    ("Longitude", 12),
+    ("Geometrie (WGS84 WKT)", 40),
 ]
-ID_COL = COLUMNS.index(("Identifier", 22)) + 1
+NAMES = [c for c, _ in COLUMNS]
+WRAP = {"Titel", "Adres", "Beschrijving"}
+
+RD_TO_WGS = Transformer.from_crs("EPSG:28992", "EPSG:4326", always_xy=True)
 
 
 # ------------------------------------------------------------------- ophalen
@@ -96,7 +113,6 @@ def fetch_records(since: dt.date):
             return records
     print("GEEN resultaten voor alle namen. Begin van de laatste API-respons:")
     print(last_response[:2000].decode("utf-8", errors="replace"))
-    # Hulp om de juiste naam te vinden: alle organisaties waarvan de naam 'Haag' bevat
     try:
         r = requests.get(SRU_URL, params={"operation": "scan", "version": "2.0",
                                           "scanClause": "dt.creator", "maximumTerms": 2000},
@@ -109,9 +125,55 @@ def fetch_records(since: dt.date):
     return []
 
 
+# ------------------------------------------------------------------- geometrie
+WKT_START = re.compile(r"^(SRID=\d+;)?\s*(POINT|LINESTRING|POLYGON|MULTIPOINT|MULTILINESTRING|"
+                       r"MULTIPOLYGON|GEOMETRYCOLLECTION)", re.I)
+_geo_samples = []   # voor diagnose in het logboek
+
+
+def to_wgs84(geom):
+    """Zet een geometrie om naar lengte/breedte (x=lon, y=lat); herkent RD en ETRS89 (ook omgekeerd)."""
+    minx, miny, maxx, maxy = geom.bounds
+    if maxx > 1000 or maxy > 1000:                       # Rijksdriehoek (meters)
+        geom = shp_transform(RD_TO_WGS.transform, geom)
+    elif 50 <= minx <= 54 and 3 <= miny <= 8:            # (lat, lon) volgorde -> omwisselen
+        geom = shp_transform(lambda x, y, z=None: (y, x), geom)
+    return geom
+
+
+def extract_geometry(rec):
+    """Zoekt WKT-geometrieën in het record. Geeft één WGS84-geometrie of None."""
+    geoms, seen = [], set()
+    for el in rec.iter():
+        t = (el.text or "").strip()
+        if not t or not WKT_START.match(t) or t in seen:
+            continue
+        seen.add(t)
+        if len(_geo_samples) < 2:
+            _geo_samples.append(f"{local(el.tag)}: {t[:200]}")
+        try:
+            g = to_wgs84(swkt.loads(re.sub(r"^SRID=\d+;", "", t, flags=re.I)))
+            minx, miny, maxx, maxy = g.bounds
+            if 3 <= minx and maxx <= 8 and 50 <= miny and maxy <= 54:   # ligt in Nederland
+                geoms.append(g)
+        except Exception:
+            continue
+    if not geoms:
+        return None
+    return geoms[0] if len(geoms) == 1 else GeometryCollection(geoms)
+
+
+def wkt_for_cell(geom) -> str:
+    for tol in (0, 0.0001, 0.001):
+        g = geom.simplify(tol) if tol else geom
+        s = swkt.dumps(g, rounding_precision=6)
+        if len(s) < 32000:
+            return s
+    return ""
+
+
 # ------------------------------------------------------------------- parsen
 def parse_record(rec) -> dict:
-    """Verzamelt alle velden per lokale naam; meerdere waarden worden uniek bewaard."""
     vals: dict[str, list[str]] = {}
     for el in rec.iter():
         txt = (el.text or "").strip()
@@ -119,14 +181,13 @@ def parse_record(rec) -> dict:
             vals.setdefault(local(el.tag), [])
             if txt not in vals[local(el.tag)]:
                 vals[local(el.tag)].append(txt)
-        # URL staat soms in een attribuut (bv. itemUrl / hasVersion)
+
     def get(*names, sep="; "):
         for n in names:
             if n in vals:
                 return sep.join(vals[n])
         return ""
 
-    # Adres: straat + huisnummer(+letter/toevoeging), meerdere locaties worden gejoined
     straten = vals.get("straatnaam", [])
     nrs = vals.get("huisnummer", [])
     letters = vals.get("huisletter", [])
@@ -141,9 +202,7 @@ def parse_record(rec) -> dict:
     else:
         adres = get("geometrielabel", "postcodeHuisnummer", "spatial")
 
-    link = get("preferredUrl", "prefferedUrl", "url")
-
-    return {
+    d = {
         "Datum gepubliceerd": get("available", "issued", "modified"),
         "Type": get("type"),
         "Titel": get("title"),
@@ -155,69 +214,124 @@ def parse_record(rec) -> dict:
         "Einddatum": get("einddatum"),
         "Einde reactietermijn": get("datumEindeReactietermijn"),
         "Publicatieblad": get("publicatienaam"),
-        "Link": link,
+        "Link": get("preferredUrl", "prefferedUrl", "url"),
         "Identifier": get("identifier"),
+        "Latitude": "", "Longitude": "", "Geometrie (WGS84 WKT)": "",
     }
+    geom = extract_geometry(rec)
+    if geom is not None:
+        c = geom.centroid
+        d["Latitude"], d["Longitude"] = round(c.y, 6), round(c.x, 6)
+        d["Geometrie (WGS84 WKT)"] = wkt_for_cell(geom)
+    return d
 
 
 # -------------------------------------------------------------------- excel
+def style_row(ws, r):
+    for i, name in enumerate(NAMES, 1):
+        c = ws.cell(row=r, column=i)
+        c.font = Font(name="Arial", size=10)
+        c.alignment = Alignment(vertical="top", wrap_text=name in WRAP)
+    lc = ws.cell(row=r, column=NAMES.index("Link") + 1)
+    if lc.value:
+        lc.hyperlink = lc.value
+        lc.font = Font(name="Arial", size=10, color="0563C1", underline="single")
+
+
+def style_header(ws, i):
+    cell = ws.cell(row=1, column=i)
+    cell.font = Font(name="Arial", bold=True, color="FFFFFF")
+    cell.fill = PatternFill("solid", fgColor="1F4E78")
+    ws.column_dimensions[get_column_letter(i)].width = COLUMNS[i - 1][1]
+
+
 def open_workbook():
     if OUTPUT.exists():
         wb = load_workbook(OUTPUT)
-        return wb, wb.active
+        ws = wb.active
+        # Oudere bestanden: ontbrekende kolommen achteraan toevoegen
+        have = [c.value for c in ws[1]]
+        for name in NAMES:
+            if name not in have:
+                ws.cell(row=1, column=len(have) + 1, value=name)
+                have.append(name)
+        return wb, ws
     wb = Workbook()
     ws = wb.active
     ws.title = "Bekendmakingen"
-    ws.append([c for c, _ in COLUMNS])
-    for i, (_, width) in enumerate(COLUMNS, 1):
-        cell = ws.cell(row=1, column=i)
-        cell.font = Font(name="Arial", bold=True, color="FFFFFF")
-        cell.fill = PatternFill("solid", fgColor="1F4E78")
-        ws.column_dimensions[get_column_letter(i)].width = width
+    ws.append(NAMES)
+    for i in range(1, len(NAMES) + 1):
+        style_header(ws, i)
     ws.freeze_panes = "A2"
     return wb, ws
+
+
+def write_outputs(ws):
+    header = [c.value for c in ws[1]]
+    rows = [dict(zip(header, r)) for r in ws.iter_rows(min_row=2, values_only=True)]
+
+    # CSV (alle kolommen, in de volgorde van het werkblad)
+    with open(OUTPUT.with_suffix(".csv"), "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(header)
+        for r in rows:
+            w.writerow(["" if r.get(h) is None else r.get(h) for h in header])
+
+    # GeoJSON: één punt per bekendmaking met coördinaten
+    feats = []
+    for r in rows:
+        lat, lon = r.get("Latitude"), r.get("Longitude")
+        if lat in (None, "") or lon in (None, ""):
+            continue
+        if MAP_FILTER and MAP_FILTER.lower() not in str(r.get("Type") or "").lower():
+            continue
+        props = {
+            "titel": r.get("Titel"), "type": r.get("Type"), "adres": r.get("Adres"),
+            "gepubliceerd": r.get("Datum gepubliceerd"), "link": r.get("Link"),
+            "identifier": r.get("Identifier"),
+            "marker-color": "#d62728", "marker-size": "medium",
+        }
+        feats.append({"type": "Feature", "properties": props,
+                      "geometry": {"type": "Point", "coordinates": [float(lon), float(lat)]}})
+    with open(OUTPUT.with_suffix(".geojson"), "w", encoding="utf-8") as f:
+        json.dump({"type": "FeatureCollection", "features": feats}, f, ensure_ascii=False, indent=1)
+    return len(feats)
 
 
 def main() -> int:
     since = dt.date.today() - dt.timedelta(days=DAYS_BACK)
     try:
         records = fetch_records(since)
-    except Exception as e:  # netwerk/parse-fout
+    except Exception as e:
         print(f"FOUT bij ophalen: {e}", file=sys.stderr)
         return 1
 
     wb, ws = open_workbook()
-    bekend = {str(r[ID_COL - 1]) for r in ws.iter_rows(min_row=2, values_only=True) if r[ID_COL - 1]}
+    header = [c.value for c in ws[1]]
+    id_idx = header.index("Identifier")
+    bekend = {str(r[id_idx]) for r in ws.iter_rows(min_row=2, values_only=True) if r[id_idx]}
 
-    nieuw = 0
+    nieuw = met_coord = 0
     nu = dt.datetime.now().strftime("%Y-%m-%d %H:%M")
     for rec in records:
         d = parse_record(rec)
         if not d["Identifier"] or d["Identifier"] in bekend:
             continue
-        row = [d.get(c, "") for c, _ in COLUMNS[:-1]] + [nu]
-        ws.append(row)
-        r = ws.max_row
-        for i in range(1, len(COLUMNS) + 1):
-            c = ws.cell(row=r, column=i)
-            c.font = Font(name="Arial", size=10)
-            c.alignment = Alignment(vertical="top", wrap_text=i in (3, 4, 7))
-        link_cell = ws.cell(row=r, column=COLUMNS.index(("Link", 50)) + 1)
-        if link_cell.value:
-            link_cell.hyperlink = link_cell.value
-            link_cell.font = Font(name="Arial", size=10, color="0563C1", underline="single")
+        d["Opgehaald op"] = nu
+        ws.append([d.get(h, "") for h in header])
+        style_row(ws, ws.max_row)
         bekend.add(d["Identifier"])
         nieuw += 1
+        met_coord += d["Latitude"] != ""
 
     ws.auto_filter.ref = ws.dimensions
     wb.save(OUTPUT)
-
-    # Zelfde gegevens als CSV, zodat GitHub ze direct als tabel kan tonen
-    with open(OUTPUT.with_suffix(".csv"), "w", newline="", encoding="utf-8") as f:
-        w = csv.writer(f)
-        for row in ws.iter_rows(values_only=True):
-            w.writerow(["" if v is None else v for v in row])
-    print(f"{dt.datetime.now():%Y-%m-%d %H:%M} - {len(records)} gevonden, {nieuw} nieuw toegevoegd -> {OUTPUT}")
+    punten = write_outputs(ws)
+    print(f"{dt.datetime.now():%Y-%m-%d %H:%M} - {len(records)} gevonden, {nieuw} nieuw toegevoegd "
+          f"({met_coord} met coördinaten); {punten} punten op de kaart")
+    if records and nieuw and not met_coord:
+        print("Geen coördinaten herkend. Voorbeelden van geometrie-tekst in de data:",
+              _geo_samples or "(geen WKT-velden gevonden)")
     return 0
 
 
