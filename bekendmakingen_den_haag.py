@@ -8,6 +8,7 @@ bekendmakingen toe aan een Excel-bestand. Reeds aanwezige bekendmakingen
 Gebruik:   python bekendmakingen_den_haag.py
 Vereist:   pip install requests openpyxl
 """
+import csv
 import sys
 import datetime as dt
 import xml.etree.ElementTree as ET
@@ -210,6 +211,12 @@ def main() -> int:
 
     ws.auto_filter.ref = ws.dimensions
     wb.save(OUTPUT)
+
+    # Zelfde gegevens als CSV, zodat GitHub ze direct als tabel kan tonen
+    with open(OUTPUT.with_suffix(".csv"), "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        for row in ws.iter_rows(values_only=True):
+            w.writerow(["" if v is None else v for v in row])
     print(f"{dt.datetime.now():%Y-%m-%d %H:%M} - {len(records)} gevonden, {nieuw} nieuw toegevoegd -> {OUTPUT}")
     return 0
 
