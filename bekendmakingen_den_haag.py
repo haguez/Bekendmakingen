@@ -14,6 +14,7 @@ Vereist:   pip install requests openpyxl shapely pyproj
 """
 import csv
 import json
+import math
 import re
 import sys
 import datetime as dt
@@ -33,7 +34,8 @@ from shapely.ops import transform as shp_transform
 SRU_URL = "https://repository.overheid.nl/sru"
 # Mogelijke schrijfwijzen van de organisatienaam in de API; de eerste met resultaten wint
 CREATORS = ["'s-Gravenhage", "Den Haag", "Gemeente Den Haag", "Gemeente 's-Gravenhage"]
-DAYS_BACK = 30                 # kijk een paar dagen terug; dubbelen worden gefilterd
+DAYS_BACK = 3                 # kijk een paar dagen terug; dubbelen worden gefilterd
+SPREAD_METERS = 6             # punten op exact dezelfde plek worden zo ver uit elkaar gezet
 MAP_FILTER = "vergunning"     # alleen deze typen op de kaart (deel van het type); "" = alles
 OUTPUT = Path(__file__).with_name("bekendmakingen_den_haag.xlsx")
 PAGE_SIZE = 500
@@ -266,6 +268,25 @@ def open_workbook():
     return wb, ws
 
 
+def spread_overlap(feats):
+    """Zet punten met exact dezelfde coördinaten in een kleine cirkel, zodat ze los te klikken zijn.
+    De exacte coördinaten blijven ongewijzigd in Excel en CSV staan."""
+    groups = {}
+    for f in feats:
+        lon, lat = f["geometry"]["coordinates"]
+        groups.setdefault((round(lat, 6), round(lon, 6)), []).append(f)
+    for (lat, lon), group in groups.items():
+        n = len(group)
+        if n < 2:
+            continue
+        for i, f in enumerate(group):
+            ang = 2 * math.pi * i / n
+            dlat = SPREAD_METERS * math.cos(ang) / 111320
+            dlon = SPREAD_METERS * math.sin(ang) / (111320 * math.cos(math.radians(lat)))
+            f["geometry"]["coordinates"] = [round(lon + dlon, 7), round(lat + dlat, 7)]
+            f["properties"]["aantal_op_deze_locatie"] = n
+
+
 def write_outputs(ws):
     header = [c.value for c in ws[1]]
     rows = [dict(zip(header, r)) for r in ws.iter_rows(min_row=2, values_only=True)]
@@ -287,12 +308,16 @@ def write_outputs(ws):
             continue
         props = {
             "titel": r.get("Titel"), "type": r.get("Type"), "adres": r.get("Adres"),
-            "gepubliceerd": r.get("Datum gepubliceerd"), "link": r.get("Link"),
-            "identifier": r.get("Identifier"),
+            "beschrijving": r.get("Beschrijving") or r.get("Titel"),
+            "gepubliceerd": r.get("Datum gepubliceerd"),
+            "einde_reactietermijn": r.get("Einde reactietermijn"),
+            "startdatum": r.get("Startdatum"), "einddatum": r.get("Einddatum"),
+            "link": r.get("Link"), "identifier": r.get("Identifier"),
             "marker-color": "#d62728", "marker-size": "medium",
         }
         feats.append({"type": "Feature", "properties": props,
                       "geometry": {"type": "Point", "coordinates": [float(lon), float(lat)]}})
+    spread_overlap(feats)
     with open(OUTPUT.with_suffix(".geojson"), "w", encoding="utf-8") as f:
         json.dump({"type": "FeatureCollection", "features": feats}, f, ensure_ascii=False, indent=1)
     return len(feats)
