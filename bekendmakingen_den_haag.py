@@ -20,7 +20,8 @@ from openpyxl.utils import get_column_letter
 
 # ----------------------------------------------------------------- instellingen
 SRU_URL = "https://repository.overheid.nl/sru"
-CREATOR = "Den Haag"          # waarde van dt.creator; controleer evt. met scanClause=dt.creator
+# Mogelijke schrijfwijzen van de organisatienaam in de API; de eerste met resultaten wint
+CREATORS = ["'s-Gravenhage", "Den Haag", "Gemeente Den Haag", "Gemeente 's-Gravenhage"]
 DAYS_BACK = 3                 # kijk een paar dagen terug; dubbelen worden gefilterd
 OUTPUT = Path(__file__).with_name("bekendmakingen_den_haag.xlsx")
 PAGE_SIZE = 500
@@ -50,13 +51,9 @@ def local(tag: str) -> str:
     return tag.rsplit("}", 1)[-1]
 
 
-def fetch_records(since: dt.date):
-    """Geeft een lijst met <record>-elementen sinds de opgegeven datum."""
-    query = (
-        f'c.product-area==officielepublicaties AND dt.creator=="{CREATOR}" '
-        f'AND dt.available>={since.isoformat()}'
-    )
-    records, start = [], 1
+def _query(query: str):
+    """Voert de zoekopdracht uit (met paginering). Geeft (records, totaal, eerste_respons)."""
+    records, start, total, first = [], 1, 0, b""
     while True:
         r = requests.get(
             SRU_URL,
@@ -71,6 +68,8 @@ def fetch_records(since: dt.date):
             headers={"User-Agent": "bekendmakingen-export/1.0"},
         )
         r.raise_for_status()
+        if start == 1:
+            first = r.content
         root = ET.fromstring(r.content)
         page = [e for e in root.iter() if local(e.tag) == "record"]
         records.extend(page)
@@ -78,7 +77,35 @@ def fetch_records(since: dt.date):
         start += PAGE_SIZE
         if not page or start > total:
             break
-    return records
+    return records, total, first
+
+
+def fetch_records(since: dt.date):
+    """Probeert de organisatienamen één voor één; geeft de records van de eerste met resultaat."""
+    last_response = b""
+    for naam in CREATORS:
+        query = (
+            f'c.product-area==officielepublicaties AND dt.creator=="{naam}" '
+            f'AND dt.available>={since.isoformat()}'
+        )
+        records, total, first = _query(query)
+        print(f"Zoekopdracht: {query}\n  -> {total} resultaten")
+        last_response = first
+        if records:
+            return records
+    print("GEEN resultaten voor alle namen. Begin van de laatste API-respons:")
+    print(last_response[:2000].decode("utf-8", errors="replace"))
+    # Hulp om de juiste naam te vinden: alle organisaties waarvan de naam 'Haag' bevat
+    try:
+        r = requests.get(SRU_URL, params={"operation": "scan", "version": "2.0",
+                                          "scanClause": "dt.creator", "maximumTerms": 2000},
+                         timeout=TIMEOUT)
+        namen = sorted({e.text for e in ET.fromstring(r.content).iter()
+                        if local(e.tag) == "value" and e.text and "haag" in e.text.lower()})
+        print("Organisaties met 'haag' in de naam:", namen or "(scan gaf niets terug)")
+    except Exception as e:
+        print("Scan mislukt:", e)
+    return []
 
 
 # ------------------------------------------------------------------- parsen
