@@ -5108,13 +5108,14 @@
     "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-501934.html",
     "identifier": "gmb-2026-501934",
     "marker-color": "#d62728",
-    "marker-size": "medium"
+    "marker-size": "medium",
+    "aantal_op_deze_locatie": 2
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
      4.269253,
-     52.099386
+     52.0994399
     ]
    }
   },
@@ -12401,13 +12402,14 @@
     "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-500127.html",
     "identifier": "gmb-2026-500127",
     "marker-color": "#d62728",
-    "marker-size": "medium"
+    "marker-size": "medium",
+    "aantal_op_deze_locatie": 2
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
      4.245513,
-     52.028649
+     52.0287029
     ]
    }
   },
@@ -16170,13 +16172,14 @@
     "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-494970.html",
     "identifier": "gmb-2026-494970",
     "marker-color": "#d62728",
-    "marker-size": "medium"
+    "marker-size": "medium",
+    "aantal_op_deze_locatie": 2
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
      4.327476,
-     52.063308
+     52.0633619
     ]
    }
   },
@@ -23955,6 +23958,657 @@
     "coordinates": [
      4.288465,
      52.099818
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Beschikking Verleend, Billie Holidaystraat 100, 2551 WK 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Billie Holidaystraat 100 te 's-Gravenhage",
+    "beschrijving": "het veranderen, verduurzamen en herindelen van het dagverblijf Billie Holidaystraat 100 door het vervangen van kozijnen, platdakramen en lichtstraten, het na-isoleren van het dak, het plaatsen van een warmtepomp/airco buitenunit en extra zonnepanelen en het maken van constructieve wijzigingen",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-29",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539042.html",
+    "identifier": "gmb-2026-539042",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.237812,
+     52.05877
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Strand Zuid 7, 2583 ZZ 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Strand Zuid 7 te 's-Gravenhage",
+    "beschrijving": "het tijdelijk plaatsen van een strandpaviljoen Strand Zuid 7 voor een periode van 1 maart tot 1 november (De Kwartel)",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539372.html",
+    "identifier": "gmb-2026-539372",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.239774,
+     52.083741
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Strand Zuid 6, 2583 ZZ 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Strand Zuid 6 te 's-Gravenhage",
+    "beschrijving": "het tijdelijk plaatsen van een strandpaviljoen Strand Zuid 6 (Kookaburra Beach) voor een periode van 1 maart tot 1 november",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539366.html",
+    "identifier": "gmb-2026-539366",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.242201,
+     52.085759
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Beschikking Verleend, Abdis Johannastraat 28, 2544 NE 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Abdis Johannastraat 28 te 's-Gravenhage",
+    "beschrijving": "het vergroten van de woning  Abdis Johannastraat 28 door het maken van een dakopbouw",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-29",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539106.html",
+    "identifier": "gmb-2026-539106",
+    "marker-color": "#d62728",
+    "marker-size": "medium",
+    "aantal_op_deze_locatie": 2
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.245513,
+     52.0285951
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Strandweg 1, 2586 JK 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Strandweg 1 te 's-Gravenhage",
+    "beschrijving": "het veranderen van het pand Strandweg 1 door het plaatsen van 3 sauna's op het dakterras (Marina Beach)",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539138.html",
+    "identifier": "gmb-2026-539138",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.26165,
+     52.099719
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Molenstraat 32, 2513 BL 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Molenstraat 32 te 's-Gravenhage",
+    "beschrijving": "het veranderen van de gevel van het pand Molenstraat 32 door het wijzigen van een schuin (enkel)glazen dak naar een zinken dak met dakramen",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539151.html",
+    "identifier": "gmb-2026-539151",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.306157,
+     52.079686
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "APV Vergunning - Besluiten, Conradkade 1, 2517 BM 's-Gravenhage",
+    "type": "andere vergunning",
+    "adres": "Conradkade 1 te 's-Gravenhage",
+    "beschrijving": "Kerstbomenstandplaats, Het plaatsen van een kerstbomenstandplaats van 1-12-2026 t/m 23-12-2026 ter hoogte van locatie Conradkade/laan van Meerdervoort 70",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-28",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539367.html",
+    "identifier": "gmb-2026-539367",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.288795,
+     52.077383
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Arenastraat 27, 2492 WV 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Arenastraat 27 te 's-Gravenhage",
+    "beschrijving": "het veranderen van het pand Arenastraat 27 door het maken van een glazen tuinkamer op het dakterras",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539950.html",
+    "identifier": "gmb-2026-539950",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.410784,
+     52.072522
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Beschikking Verleend, Paul Gabriëlstraat 137 2596 VC 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "",
+    "beschrijving": "het veranderen en vergroten van de woning Paul Gabriëlstraat 137 door het vervangen en vergroten van de dakuitbouw met dakterras en het plaatsen van een warmtepomp buitenunit",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-29",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539526.html",
+    "identifier": "gmb-2026-539526",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.326532,
+     52.094084
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Beschikking Verleend, sportlaan 598, 2566 MJ 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "",
+    "beschrijving": "het afwijken van de regels van het omgevingsplan voor het tijdelijk in gebruik nemen van een gedeelte van het voormalige ziekenhuis Sportlaan 598 (bouwdeel E2) tot opvanglocatie ten behoeve van Permanente Winter Opvang voor de periode van 1 november 2026 tot 1 april 2027",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-29",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539666.html",
+    "identifier": "gmb-2026-539666",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.264766,
+     52.081612
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, De Réaumurstraat 41, 2562 TW 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "De Réaumurstraat 41 te 's-Gravenhage",
+    "beschrijving": "het veranderen en vergroten van het pand De Réaumurstraat 41 tot 6 wooneenheden ten behoeve van huisvesting van topsporters",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539704.html",
+    "identifier": "gmb-2026-539704",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.279504,
+     52.071221
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Prinses Beatrixlaan 9, 2595 AK 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Prinses Beatrixlaan 9 te 's-Gravenhage",
+    "beschrijving": "het veranderen van het pand Prinses Beatrixlaan 9 tot fitnesscentrum",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539058.html",
+    "identifier": "gmb-2026-539058",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.334103,
+     52.080221
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Van Boetzelaerlaan 130 A, 2581 AX 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Van Boetzelaerlaan 130 A te 's-Gravenhage",
+    "beschrijving": "het veranderen en vergroten van het pand Van Boetzelaerlaan 130A tot 5 woningen en het plaatsen van een uitbouw op de tweede verdieping",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539584.html",
+    "identifier": "gmb-2026-539584",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.270684,
+     52.091336
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Laan van Poot 114, 2566 EC 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Laan van Poot 114 te 's-Gravenhage",
+    "beschrijving": "het kappen van 1 berk (stamomtrek 100 cm), staande in de voortuin van het perceel Laan van Poot 114",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539185.html",
+    "identifier": "gmb-2026-539185",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.264176,
+     52.085635
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Dr. Lelykade 10, 2583 CM 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Dr. Lelykade 10 te 's-Gravenhage",
+    "beschrijving": "het veranderen van de voorgevel van het pand Dr. Lelykade 10 door het plaatsen van één reclame-uiting",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539616.html",
+    "identifier": "gmb-2026-539616",
+    "marker-color": "#d62728",
+    "marker-size": "medium",
+    "aantal_op_deze_locatie": 2
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.269253,
+     52.0993321
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Beschikking Verleend, Regentesselaan 137, 2562 CW 's-Gravenhage, Regentesselaan 139, 2562 CW 's-Gravenhage, Regentesselaan 137 A, 2562 CW 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Regentesselaan 137 te 's-Gravenhage; Regentesselaan 139 te 's-Gravenhage; Regentesselaan 137 A te 's-Gravenhage",
+    "beschrijving": "het veranderen van het gebruik van garage Regentesselaan 139 naar wonen met daarbij een wijziging van de voorgevel, aanbouw met dakterras en van de hoofddraagconstructie alsmede ook het wijzigen van de hoofddraagconstructie in de daarboven gelegen woningen Regentesselaan 137 en 137a",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-29",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539280.html",
+    "identifier": "gmb-2026-539280",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.282954,
+     52.075665
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Beschikking gedeeltelijk verleend voor Bouwactiviteit (technisch) en gedeeltelijk geweigerd voor Bouwactiviteit (omgevingsplan), Mercuriusweg 37, 2516 AW 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Mercuriusweg 37 te 's-Gravenhage",
+    "beschrijving": "het gedeeltelijk veranderen van de gebruiksfunctie van het pand Mercuriusweg 37 door het wijzigen van de culturele functie naar maatschappelijke-zorgfunctie",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-29",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-540090.html",
+    "identifier": "gmb-2026-540090",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.339344,
+     52.070117
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Beschikking Verleend, Joseph Ledelstraat 20 en De Constant Rebecquestraat 51",
+    "type": "omgevingsvergunning",
+    "adres": "Joseph Ledelstraat 20 en De Constant Rebecquestraat 51",
+    "beschrijving": "het veranderen van het bijgebouw Joseph Ledelstraat 20 en De Constant Rebecquestraat 51 door het herstellen van de fundering en het aanpassen van constructieve delen, het inpandig herindelen, het maken van een trap naar de kelder, het wijzigen van de gevels en het ophogen en aanpassen van het dak en",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-29",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539071.html",
+    "identifier": "gmb-2026-539071",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.290793,
+     52.077246
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "APV Vergunning - Besluiten, Bagijnestraat 36, 2511 CK 's-Gravenhage",
+    "type": "andere vergunning",
+    "adres": "Bagijnestraat 36 te 's-Gravenhage",
+    "beschrijving": "MDJ-PD262112-Kalvermarkt, het opbreken van de weg ten behoeve van leidingwerkzaamheden van 4-1-2027 tot en met 11-6-2027 ter hoogte van locatie Bagijnestraat 36",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539490.html",
+    "identifier": "gmb-2026-539490",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.315645,
+     52.078206
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Loosduinsekade 349, 2571 CE 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Loosduinsekade 349 te 's-Gravenhage",
+    "beschrijving": "het vergroten van het pand Loosduinsekade 349 door het maken van een dakopbouw met vaste trap, een dakterras en een loggia",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539211.html",
+    "identifier": "gmb-2026-539211",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.277652,
+     52.068787
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "APV Vergunning - Besluiten, Paul Krugerlaan 1, 2571 HA 's-Gravenhage",
+    "type": "andere vergunning",
+    "adres": "Paul Krugerlaan 1 te 's-Gravenhage",
+    "beschrijving": "Oliebollenstandplaats Paul Krugerlaan, Het plaatsen van een oliebollenstandplaats van 1-10-2026 t/m 10-1-2027 ter hoogte van locatie Paul Krugerlaan",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-28",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539446.html",
+    "identifier": "gmb-2026-539446",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.28497,
+     52.070587
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Van Alkemadelaan 350, 2597 AS 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Van Alkemadelaan 350 te 's-Gravenhage",
+    "beschrijving": "het veranderen en verduurzamen van het pand Van Alkemadelaan 350 door het plaatsen van zonnepanelen en een hybride warmtepomp",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539408.html",
+    "identifier": "gmb-2026-539408",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.321181,
+     52.100324
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Beschikking Verleend, Reinwardtstraat 19, 2522 AA 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Reinwardtstraat 19 te 's-Gravenhage",
+    "beschrijving": "het vergroten van de woning Reinwardtstraat 19 door het maken van een dakopbouw",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-29",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539852.html",
+    "identifier": "gmb-2026-539852",
+    "marker-color": "#d62728",
+    "marker-size": "medium",
+    "aantal_op_deze_locatie": 2
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.327476,
+     52.0632541
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Beschikking Verleend, Sportlaan 7, 2566 GK 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Sportlaan 7 te 's-Gravenhage",
+    "beschrijving": "het vergroten van de woning Sportlaan 7 door het maken van een dakopbouw en het aanbrengen van dakisolatie",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "2026-12-29",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539440.html",
+    "identifier": "gmb-2026-539440",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.271602,
+     52.085126
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Kennisgeving beschikking maatwerkvoorschrift(en), Laakkwartier Oost te Den Haag",
+    "type": "omgevingsvergunning",
+    "adres": "Laakkwartier-Oost 's-Gravenhage",
+    "beschrijving": "Het lozen van grondwater afkomstig van ontwatering in een vuilwaterriool met een duur van 159 dagen en een debiet van 10 m³ per uur t.b.v. het plaatsen van ondergrondse restafvalcontainers (ORAC's).",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-540060.html",
+    "identifier": "gmb-2026-540060",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.326018,
+     52.060214
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Van Alkemadelaan 892, 2597 BE 's-Gravenhage",
+    "type": "omgevingsvergunning",
+    "adres": "Van Alkemadelaan 892 te 's-Gravenhage",
+    "beschrijving": "het veranderen van de gevel van het pand Van Alkemadelaan 892 door het vervangen van de kozijnen",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539935.html",
+    "identifier": "gmb-2026-539935",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.307885,
+     52.107794
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "titel": "Omgevingsvergunning - Aangevraagd, Waldorpstraat ongenummerd tegenover de MegaStores (Waldorp Four)",
+    "type": "omgevingsvergunning",
+    "adres": "Waldorpstraat ongenummerd tegenover de MegaStores (Waldorp Four)",
+    "beschrijving": "het indienen van een aanvulling voor de brandveiligheid voor de vergunning met kenmerk 202022247/8203044 en VTH2025-19100 voor Waldorp Four, Waldorpstraat ongenummerd tegenover de MegaStores",
+    "gepubliceerd": "2026-11-19",
+    "einde_reactietermijn": "",
+    "startdatum": "",
+    "einddatum": "",
+    "link": "https://zoek.officielebekendmakingen.nl/gmb-2026-539460.html",
+    "identifier": "gmb-2026-539460",
+    "marker-color": "#d62728",
+    "marker-size": "medium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.315004,
+     52.065115
     ]
    }
   }
